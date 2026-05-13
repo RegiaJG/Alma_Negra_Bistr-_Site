@@ -68,8 +68,8 @@ export function Footer() {
           <p className="text-cream/25 text-xs">
             © {new Date().getFullYear()} Alma Negra Bistrô. Todos os direitos reservados.
           </p>
-          <p className="text-cream/15 text-xs">
-            Desenvolvido por <span className="text-gold/50">Portfólio Web</span>
+          <p className="text-cream/25 text-xs">
+            Desenvolvido por <span className="text-gold/60">Lucas Costa Nogueira</span>
           </p>
         </div>
       </div>

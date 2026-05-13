@@ -6,6 +6,7 @@ import { GalleryMasonry } from '@/components/sections/Gallery'
 import { ReservationForm } from '@/components/sections/Reservations'
 import { Location } from '@/components/sections/Location'
 import { Footer } from '@/components/sections/Footer'
+import { DeveloperCTA } from '@/components/sections/DeveloperCTA'
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <GalleryMasonry />
       <ReservationForm />
       <Location />
+      <DeveloperCTA />
       <Footer />
     </main>
   )
