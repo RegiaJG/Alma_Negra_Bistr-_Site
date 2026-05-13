@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
   const { data, error } = await resend.emails.send({
     from: 'onboarding@resend.dev',
-    to: 'D-Gothsublime@hotmail.com',
+    to: 'd-gothsublime@hotmail.com',
     subject: `Nova Reserva — ${name} · ${date} às ${time}`,
     html: `
       <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; background: #0A0A0A; color: #F5F0E8; padding: 40px 32px;">
