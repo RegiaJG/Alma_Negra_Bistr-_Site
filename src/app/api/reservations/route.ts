@@ -4,10 +4,12 @@ import { NextResponse } from 'next/server'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
+  console.log('[reservations] API key presente:', !!process.env.RESEND_API_KEY)
+
   const body = await req.json()
   const { name, email, phone, date, time, guests, notes } = body
 
-  const { error } = await resend.emails.send({
+  const { data, error } = await resend.emails.send({
     from: 'onboarding@resend.dev',
     to: 'D-Gothsublime@hotmail.com',
     subject: `Nova Reserva — ${name} · ${date} às ${time}`,
@@ -56,8 +58,10 @@ export async function POST(req: Request) {
   })
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    console.error('[reservations] Erro Resend:', JSON.stringify(error))
+    return NextResponse.json({ error: error.message, detail: error }, { status: 500 })
   }
 
+  console.log('[reservations] Enviado com sucesso:', data)
   return NextResponse.json({ success: true })
 }
