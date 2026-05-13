@@ -13,6 +13,8 @@ export function ReservationForm() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -23,9 +25,24 @@ export function ReservationForm() {
     notes: '',
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setLoading(true)
+    setError(false)
+
+    const res = await fetch('/api/reservations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    })
+
+    setLoading(false)
+
+    if (res.ok) {
+      setSubmitted(true)
+    } else {
+      setError(true)
+    }
   }
 
   return (
@@ -139,10 +156,15 @@ export function ReservationForm() {
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
               />
             </div>
-            <div className="sm:col-span-2 flex justify-center pt-4">
-              <Button type="submit" size="lg">
-                Confirmar Reserva
+            <div className="sm:col-span-2 flex flex-col items-center gap-4 pt-4">
+              <Button type="submit" size="lg" disabled={loading}>
+                {loading ? 'Enviando...' : 'Confirmar Reserva'}
               </Button>
+              {error && (
+                <p className="text-wine text-sm text-center">
+                  Não foi possível enviar a reserva. Tente novamente.
+                </p>
+              )}
             </div>
           </motion.form>
         )}
