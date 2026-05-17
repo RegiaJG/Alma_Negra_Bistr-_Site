@@ -7,16 +7,29 @@ import { cn } from '@/lib/utils'
 import { MobileMenu } from './MobileMenu'
 import { Button } from '@/components/ui/Button'
 
-const navLinks = [
-  { href: '#conceito', label: 'Conceito' },
-  { href: '#cardapio', label: 'Cardápio' },
-  { href: '#galeria', label: 'Galeria' },
-  { href: '#localizacao', label: 'Localização' },
-]
+type Lang = 'pt' | 'en'
+
+const nav = {
+  pt: [
+    { href: '#conceito', label: 'Conceito' },
+    { href: '#cardapio', label: 'Cardápio' },
+    { href: '#galeria', label: 'Galeria' },
+    { href: '#localizacao', label: 'Localização' },
+  ],
+  en: [
+    { href: '#conceito', label: 'Concept' },
+    { href: '#cardapio', label: 'Menu' },
+    { href: '#galeria', label: 'Gallery' },
+    { href: '#localizacao', label: 'Location' },
+  ],
+}
+
+const cta = { pt: 'Reservar Mesa', en: 'Book a Table' }
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [lang, setLang] = useState<Lang>('pt')
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -24,9 +37,22 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    const saved = localStorage.getItem('lang')
+    if (saved === 'pt' || saved === 'en') setLang(saved)
+  }, [])
+
+  const toggleLang = () => {
+    const next: Lang = lang === 'pt' ? 'en' : 'pt'
+    setLang(next)
+    localStorage.setItem('lang', next)
+  }
+
   const handleReserve = () => {
     document.getElementById('reservas')?.scrollIntoView({ behavior: 'smooth' })
   }
+
+  const links = nav[lang]
 
   return (
     <>
@@ -44,7 +70,7 @@ export function Header() {
           </Link>
 
           <nav className="hidden lg:flex items-center gap-10">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
@@ -55,9 +81,14 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden lg:flex items-center gap-4">
+            <button onClick={toggleLang} className="font-body text-xs tracking-widest">
+              <span className={lang === 'pt' ? 'text-gold' : 'text-cream/30'}>PT</span>
+              <span className="text-cream/20 mx-1">|</span>
+              <span className={lang === 'en' ? 'text-gold' : 'text-cream/30'}>EN</span>
+            </button>
             <Button variant="outline" size="sm" onClick={handleReserve}>
-              Reservar Mesa
+              {cta[lang]}
             </Button>
           </div>
 
@@ -74,7 +105,10 @@ export function Header() {
       <MobileMenu
         isOpen={mobileOpen}
         onClose={() => setMobileOpen(false)}
-        links={navLinks}
+        links={links}
+        ctaLabel={cta[lang]}
+        lang={lang}
+        onToggleLang={toggleLang}
       />
     </>
   )

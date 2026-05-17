@@ -9,9 +9,12 @@ interface MobileMenuProps {
   isOpen: boolean
   onClose: () => void
   links: { href: string; label: string }[]
+  ctaLabel: string
+  lang: 'pt' | 'en'
+  onToggleLang: () => void
 }
 
-export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
+export function MobileMenu({ isOpen, onClose, links, ctaLabel, lang, onToggleLang }: MobileMenuProps) {
   useEffect(() => {
     if (isOpen) document.body.style.overflow = 'hidden'
     else document.body.style.overflow = ''
@@ -40,13 +43,20 @@ export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
         >
           <div className="flex justify-between items-center mb-16">
             <span className="font-display text-2xl text-cream tracking-wider">Alma Negra</span>
-            <button
-              onClick={onClose}
-              className="text-cream hover:text-gold transition-colors"
-              aria-label="Fechar menu"
-            >
-              <X size={24} />
-            </button>
+            <div className="flex items-center gap-4">
+              <button onClick={onToggleLang} className="font-body text-xs tracking-widest">
+                <span className={lang === 'pt' ? 'text-gold' : 'text-cream/30'}>PT</span>
+                <span className="text-cream/20 mx-1">|</span>
+                <span className={lang === 'en' ? 'text-gold' : 'text-cream/30'}>EN</span>
+              </button>
+              <button
+                onClick={onClose}
+                className="text-cream hover:text-gold transition-colors"
+                aria-label="Fechar menu"
+              >
+                <X size={24} />
+              </button>
+            </div>
           </div>
 
           <nav className="flex flex-col gap-8 flex-1">
@@ -67,7 +77,7 @@ export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
 
           <div className="mt-auto pt-8">
             <Button variant="outline" size="lg" className="w-full" onClick={handleReserve}>
-              Reservar Mesa
+              {ctaLabel}
             </Button>
           </div>
         </motion.div>

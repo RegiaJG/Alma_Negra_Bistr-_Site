@@ -26,7 +26,14 @@ export function Hero() {
           alt="Interior sofisticado do Alma Negra Bistrô"
           fill
           priority
-          className="object-cover"
+          className="object-cover hidden sm:block"
+        />
+        <Image
+          src="/images/hero-mobile.jpg"
+          alt="Interior sofisticado do Alma Negra Bistrô"
+          fill
+          priority
+          className="object-cover block sm:hidden"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-base/60 via-base/40 to-base" />
       </motion.div>
