@@ -6,12 +6,14 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { GALLERY_IMAGES } from '@/lib/constants'
+import { useLanguage } from '@/lib/language-context'
 import type { GalleryImage } from '@/types'
 
 export function GalleryMasonry() {
   const [selected, setSelected] = useState<GalleryImage | null>(null)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const { t } = useLanguage()
 
   return (
     <section id="galeria" className="py-32 px-6 lg:px-12 max-w-7xl mx-auto">
@@ -22,9 +24,9 @@ export function GalleryMasonry() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <Badge variant="gold" className="mb-4">Galeria</Badge>
+          <Badge variant="gold" className="mb-4">{t.gallery.badge}</Badge>
           <h2 className="font-display text-5xl lg:text-6xl text-cream italic">
-            Cada detalhe, uma obra
+            {t.gallery.title}
           </h2>
         </motion.div>
 
@@ -48,7 +50,7 @@ export function GalleryMasonry() {
                 />
                 <div className="absolute inset-0 bg-base/0 group-hover:bg-base/30 transition-colors duration-300 flex items-center justify-center">
                   <span className="text-cream text-xs tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-body">
-                    Ampliar
+                    {t.gallery.hover}
                   </span>
                 </div>
               </div>

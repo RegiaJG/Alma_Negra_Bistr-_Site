@@ -5,31 +5,18 @@ import { motion, useInView } from 'framer-motion'
 import { MapPin, Phone, Mail, Clock } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { RESTAURANT } from '@/lib/constants'
-
-const contactItems = [
-  {
-    icon: MapPin,
-    label: 'Endereço',
-    content: RESTAURANT.address,
-    href: undefined,
-  },
-  {
-    icon: Phone,
-    label: 'Telefone',
-    content: RESTAURANT.phone,
-    href: `tel:${RESTAURANT.phone}`,
-  },
-  {
-    icon: Mail,
-    label: 'E-mail',
-    content: RESTAURANT.email,
-    href: `mailto:${RESTAURANT.email}`,
-  },
-]
+import { useLanguage } from '@/lib/language-context'
 
 export function Location() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const { t } = useLanguage()
+
+  const contactItems = [
+    { icon: MapPin, label: t.location.labelAddress, content: RESTAURANT.address, href: undefined },
+    { icon: Phone, label: t.location.labelPhone, content: RESTAURANT.phone, href: `tel:${RESTAURANT.phone}` },
+    { icon: Mail, label: t.location.labelEmail, content: RESTAURANT.email, href: `mailto:${RESTAURANT.email}` },
+  ]
 
   return (
     <section id="localizacao" className="py-32 px-6 lg:px-12 max-w-7xl mx-auto" ref={ref}>
@@ -39,8 +26,8 @@ export function Location() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <Badge variant="gold" className="mb-6">Como nos encontrar</Badge>
-          <h2 className="font-display text-5xl text-cream italic mb-12">Venha nos visitar</h2>
+          <Badge variant="gold" className="mb-6">{t.location.badge}</Badge>
+          <h2 className="font-display text-5xl text-cream italic mb-12">{t.location.title}</h2>
 
           <div className="flex flex-col gap-8">
             {contactItems.map(({ icon: Icon, label, content, href }) => (
@@ -62,7 +49,7 @@ export function Location() {
             <div className="flex gap-4">
               <Clock size={20} className="text-gold flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-cream font-medium mb-2">Horários</p>
+                <p className="text-cream font-medium mb-2">{t.location.labelHours}</p>
                 <p className="text-cream/60">{RESTAURANT.hours.weekdays}</p>
                 <p className="text-cream/60">{RESTAURANT.hours.weekend}</p>
                 <p className="text-cream/40 text-sm mt-1">{RESTAURANT.hours.closed}</p>

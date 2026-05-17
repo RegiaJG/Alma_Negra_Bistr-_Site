@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
+import { useLanguage } from '@/lib/language-context'
 
 const timeSlots = ['19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00']
 
@@ -24,6 +25,7 @@ export function ReservationForm() {
     guests: '2',
     notes: '',
   })
+  const { t } = useLanguage()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -54,13 +56,11 @@ export function ReservationForm() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <Badge variant="gold" className="mb-4">Reservas</Badge>
+          <Badge variant="gold" className="mb-4">{t.reservations.badge}</Badge>
           <h2 className="font-display text-5xl lg:text-6xl text-cream italic mb-4">
-            Reserve sua mesa
+            {t.reservations.title}
           </h2>
-          <p className="text-cream/50 text-sm">
-            Confirmamos por e-mail em até 2 horas. Grupos acima de 10 pessoas: ligue para nós.
-          </p>
+          <p className="text-cream/50 text-sm">{t.reservations.subtitle}</p>
         </motion.div>
 
         {submitted ? (
@@ -70,10 +70,8 @@ export function ReservationForm() {
             className="text-center py-16 border border-gold/30 bg-gold/5"
           >
             <div className="w-12 h-0.5 bg-gold mx-auto mb-6" />
-            <h3 className="font-display text-3xl text-cream italic mb-3">Reserva solicitada</h3>
-            <p className="text-cream/60">
-              Obrigado, <span className="text-gold">{form.name}</span>. Confirmaremos em breve por e-mail.
-            </p>
+            <h3 className="font-display text-3xl text-cream italic mb-3">{t.reservations.sent}</h3>
+            <p className="text-cream/60">{t.reservations.sentMsg(form.name)}</p>
           </motion.div>
         ) : (
           <motion.form
@@ -84,7 +82,7 @@ export function ReservationForm() {
             className="grid grid-cols-1 sm:grid-cols-2 gap-8"
           >
             <Input
-              label="Nome completo"
+              label={t.reservations.fieldName}
               id="name"
               type="text"
               placeholder="Seu nome"
@@ -93,7 +91,7 @@ export function ReservationForm() {
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
             <Input
-              label="E-mail"
+              label={t.reservations.fieldEmail}
               id="email"
               type="email"
               placeholder="seu@email.com"
@@ -102,7 +100,7 @@ export function ReservationForm() {
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
             <Input
-              label="Telefone"
+              label={t.reservations.fieldPhone}
               id="phone"
               type="tel"
               placeholder="(11) 00000-0000"
@@ -110,7 +108,7 @@ export function ReservationForm() {
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
             />
             <Input
-              label="Número de pessoas"
+              label={t.reservations.fieldGuests}
               id="guests"
               type="number"
               min="1"
@@ -119,7 +117,7 @@ export function ReservationForm() {
               onChange={(e) => setForm({ ...form, guests: e.target.value })}
             />
             <Input
-              label="Data"
+              label={t.reservations.fieldDate}
               id="date"
               type="date"
               required
@@ -131,7 +129,7 @@ export function ReservationForm() {
                 htmlFor="time"
                 className="text-xs font-medium tracking-widest uppercase text-cream/50"
               >
-                Horário
+                {t.reservations.fieldTime}
               </label>
               <select
                 id="time"
@@ -140,30 +138,28 @@ export function ReservationForm() {
                 required
                 className="w-full bg-transparent border-b border-cream/20 py-3 text-cream focus:outline-none focus:border-gold transition-colors duration-300 font-body"
               >
-                <option value="" className="bg-base">Selecione</option>
-                {timeSlots.map((t) => (
-                  <option key={t} value={t} className="bg-base">{t}</option>
+                <option value="" className="bg-base">{t.reservations.selectDefault}</option>
+                {timeSlots.map((ts) => (
+                  <option key={ts} value={ts} className="bg-base">{ts}</option>
                 ))}
               </select>
             </div>
             <div className="sm:col-span-2">
               <Textarea
-                label="Observações (opcional)"
+                label={t.reservations.fieldNotes}
                 id="notes"
                 rows={3}
-                placeholder="Alergias, ocasião especial, preferências..."
+                placeholder={t.reservations.notesPlaceholder}
                 value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
               />
             </div>
             <div className="sm:col-span-2 flex flex-col items-center gap-4 pt-4">
               <Button type="submit" size="lg" disabled={loading}>
-                {loading ? 'Enviando...' : 'Confirmar Reserva'}
+                {loading ? t.reservations.loading : t.reservations.submit}
               </Button>
               {error && (
-                <p className="text-wine text-sm text-center">
-                  Não foi possível enviar a reserva. Tente novamente.
-                </p>
+                <p className="text-wine text-sm text-center">{t.reservations.error}</p>
               )}
             </div>
           </motion.form>

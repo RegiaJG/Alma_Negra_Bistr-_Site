@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
+import { Providers } from '@/components/layout/Providers'
 import './globals.css'
 
 const cormorant = Cormorant_Garamond({
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${cormorant.variable} ${dmSans.variable}`}>
-      <body className="bg-base text-cream font-body antialiased">{children}</body>
+      <body className="bg-base text-cream font-body antialiased"><Providers>{children}</Providers></body>
     </html>
   )
 }

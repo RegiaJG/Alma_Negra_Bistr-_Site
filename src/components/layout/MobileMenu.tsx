@@ -4,17 +4,16 @@ import { useEffect } from 'react'
 import { X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
+import { useLanguage } from '@/lib/language-context'
 
 interface MobileMenuProps {
   isOpen: boolean
   onClose: () => void
-  links: { href: string; label: string }[]
-  ctaLabel: string
-  lang: 'pt' | 'en'
-  onToggleLang: () => void
 }
 
-export function MobileMenu({ isOpen, onClose, links, ctaLabel, lang, onToggleLang }: MobileMenuProps) {
+export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const { lang, t, toggle } = useLanguage()
+
   useEffect(() => {
     if (isOpen) document.body.style.overflow = 'hidden'
     else document.body.style.overflow = ''
@@ -44,7 +43,7 @@ export function MobileMenu({ isOpen, onClose, links, ctaLabel, lang, onToggleLan
           <div className="flex justify-between items-center mb-16">
             <span className="font-display text-2xl text-cream tracking-wider">Alma Negra</span>
             <div className="flex items-center gap-4">
-              <button onClick={onToggleLang} className="font-body text-xs tracking-widest">
+              <button onClick={toggle} className="font-body text-xs tracking-widest">
                 <span className={lang === 'pt' ? 'text-gold' : 'text-cream/30'}>PT</span>
                 <span className="text-cream/20 mx-1">|</span>
                 <span className={lang === 'en' ? 'text-gold' : 'text-cream/30'}>EN</span>
@@ -60,7 +59,7 @@ export function MobileMenu({ isOpen, onClose, links, ctaLabel, lang, onToggleLan
           </div>
 
           <nav className="flex flex-col gap-8 flex-1">
-            {links.map((link, i) => (
+            {t.nav.map((link, i) => (
               <motion.a
                 key={link.href}
                 href={link.href}
@@ -77,7 +76,7 @@ export function MobileMenu({ isOpen, onClose, links, ctaLabel, lang, onToggleLan
 
           <div className="mt-auto pt-8">
             <Button variant="outline" size="lg" className="w-full" onClick={handleReserve}>
-              {ctaLabel}
+              {t.cta}
             </Button>
           </div>
         </motion.div>

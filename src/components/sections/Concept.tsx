@@ -4,16 +4,12 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
 import { Badge } from '@/components/ui/Badge'
-
-const stats = [
-  { value: '6', label: 'Anos de história' },
-  { value: '47', label: 'Pratos autorais' },
-  { value: '12k', label: 'Experiências servidas' },
-]
+import { useLanguage } from '@/lib/language-context'
 
 export function Concept() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const { t } = useLanguage()
 
   return (
     <section id="conceito" className="py-32 px-6 lg:px-12 max-w-7xl mx-auto">
@@ -37,7 +33,7 @@ export function Concept() {
           <div className="absolute -bottom-4 -right-4 w-32 h-32 border-b-2 border-r-2 border-gold/40 pointer-events-none" />
           <div className="absolute bottom-8 left-8 right-8 bg-base/80 backdrop-blur-sm p-4 border border-cream/10">
             <p className="font-display text-xl text-gold italic">Chef Philippe Arantes</p>
-            <p className="text-cream/60 text-xs tracking-widest uppercase mt-1">25 anos de alta gastronomia</p>
+            <p className="text-cream/60 text-xs tracking-widest uppercase mt-1">{t.concept.chefCaption}</p>
           </div>
         </motion.div>
 
@@ -47,24 +43,20 @@ export function Concept() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="flex flex-col gap-8"
         >
-          <Badge variant="gold">Nossa História</Badge>
+          <Badge variant="gold">{t.concept.badge}</Badge>
 
           <h2 className="font-display text-5xl lg:text-6xl text-cream leading-tight italic">
-            Uma experiência que vai além do prato
+            {t.concept.title}
           </h2>
 
           <div className="w-16 h-0.5 bg-gold" />
 
-          <p className="text-cream/70 leading-relaxed text-lg">
-            Nascido da obsessão por contrastes, o Alma Negra surgiu em 2018 com uma proposta ousada: transformar cada refeição em uma cerimônia sensorial. O ambiente propositalmente sombrio cria o palco perfeito para que cores e sabores dos nossos pratos ganhem vida própria.
-          </p>
+          <p className="text-cream/70 leading-relaxed text-lg">{t.concept.p1}</p>
 
-          <p className="text-cream/60 leading-relaxed">
-            Chef Philippe Arantes, com passagem pelos melhores restaurantes de Paris e Tóquio, traz para São Paulo uma cozinha autoral que respeita técnicas clássicas enquanto abraça ingredientes brasileiros de temporada. O resultado é uma fusão que surpreende a cada visita.
-          </p>
+          <p className="text-cream/60 leading-relaxed">{t.concept.p2}</p>
 
           <div className="grid grid-cols-3 gap-6 pt-4">
-            {stats.map((stat) => (
+            {t.concept.stats.map((stat) => (
               <div key={stat.label} className="border-l border-gold/30 pl-4">
                 <p className="font-display text-3xl text-gold italic">{stat.value}</p>
                 <p className="text-cream/50 text-xs tracking-wider uppercase mt-1">{stat.label}</p>

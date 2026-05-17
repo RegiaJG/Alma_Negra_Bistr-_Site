@@ -8,14 +8,8 @@ import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
 import { MENU_ITEMS } from '@/lib/constants'
+import { useLanguage } from '@/lib/language-context'
 import type { MenuCategory, MenuItem } from '@/types'
-
-const categories: { key: MenuCategory; label: string }[] = [
-  { key: 'entradas', label: 'Entradas' },
-  { key: 'pratos', label: 'Pratos Principais' },
-  { key: 'sobremesas', label: 'Sobremesas' },
-  { key: 'drinks', label: 'Drinks' },
-]
 
 function MenuItemCard({ item }: { item: MenuItem }) {
   return (
@@ -43,6 +37,7 @@ export function MenuSection() {
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('pratos')
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const { t } = useLanguage()
 
   return (
     <section id="cardapio" className="py-32 bg-base-light/20">
@@ -53,15 +48,15 @@ export function MenuSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <Badge variant="gold" className="mb-4">Cardápio</Badge>
+          <Badge variant="gold" className="mb-4">{t.menu.badge}</Badge>
           <h2 className="font-display text-5xl lg:text-6xl text-cream italic mb-4">
-            Uma sinfonia de sabores
+            {t.menu.title}
           </h2>
           <div className="w-16 h-0.5 bg-gold mx-auto" />
         </motion.div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {categories.map((cat) => (
+          {t.menu.categories.map((cat) => (
             <button
               key={cat.key}
               onClick={() => setActiveCategory(cat.key)}
@@ -95,7 +90,7 @@ export function MenuSection() {
         <div className="text-center mt-12">
           <Link href="/cardapio">
             <Button variant="outline" size="lg">
-              Ver Cardápio Completo
+              {t.menu.viewAll}
             </Button>
           </Link>
         </div>

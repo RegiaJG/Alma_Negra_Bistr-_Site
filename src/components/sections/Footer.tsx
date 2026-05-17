@@ -1,31 +1,25 @@
-import Link from 'next/link'
+'use client'
+
 import { Instagram, Facebook } from 'lucide-react'
 import { RESTAURANT } from '@/lib/constants'
-
-const navLinks = [
-  { href: '#conceito', label: 'Conceito' },
-  { href: '#cardapio', label: 'Cardápio' },
-  { href: '#galeria', label: 'Galeria' },
-  { href: '#reservas', label: 'Reservas' },
-  { href: '#localizacao', label: 'Localização' },
-]
+import { useLanguage } from '@/lib/language-context'
 
 export function Footer() {
+  const { t } = useLanguage()
+
   return (
     <footer className="border-t border-cream/10 bg-base">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
           <div>
             <h3 className="font-display text-2xl text-cream italic mb-4">Alma Negra Bistrô</h3>
-            <p className="text-cream/50 text-sm leading-relaxed">
-              Onde o sabor encontra a escuridão perfeita. Alta gastronomia autoral em São Paulo.
-            </p>
+            <p className="text-cream/50 text-sm leading-relaxed">{t.footer.tagline}</p>
           </div>
 
           <div>
-            <p className="text-xs tracking-widest uppercase text-cream/30 mb-5">Navegação</p>
+            <p className="text-xs tracking-widest uppercase text-cream/30 mb-5">{t.footer.navLabel}</p>
             <ul className="flex flex-col gap-3">
-              {navLinks.map((link) => (
+              {t.footer.navLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
@@ -39,7 +33,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-xs tracking-widest uppercase text-cream/30 mb-5">Redes Sociais</p>
+            <p className="text-xs tracking-widest uppercase text-cream/30 mb-5">{t.footer.socialLabel}</p>
             <div className="flex gap-4 mb-6">
               <a
                 href={RESTAURANT.social.instagram}
@@ -66,10 +60,10 @@ export function Footer() {
 
         <div className="border-t border-cream/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-cream/25 text-xs">
-            © {new Date().getFullYear()} Alma Negra Bistrô. Todos os direitos reservados.
+            © {new Date().getFullYear()} Alma Negra Bistrô. {t.footer.rights}
           </p>
           <p className="text-cream/25 text-xs">
-            Desenvolvido por <span className="text-gold/60">Lucas Costa Nogueira</span>
+            {t.footer.credit} <span className="text-gold/60">Lucas Costa Nogueira</span>
           </p>
         </div>
       </div>

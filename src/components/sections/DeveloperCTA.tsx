@@ -4,10 +4,12 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Mail, MessageCircle } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
+import { useLanguage } from '@/lib/language-context'
 
 export function DeveloperCTA() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const { t } = useLanguage()
 
   return (
     <section className="py-32 px-6 lg:px-12 bg-base-light relative overflow-hidden">
@@ -23,7 +25,7 @@ export function DeveloperCTA() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <Badge variant="gold">Portfólio</Badge>
+          <Badge variant="gold">{t.developerCta.badge}</Badge>
         </motion.div>
 
         <motion.h2
@@ -32,9 +34,9 @@ export function DeveloperCTA() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="font-display text-4xl lg:text-6xl text-cream italic leading-tight"
         >
-          Este site é uma criação.
+          {t.developerCta.title1}
           <br />
-          <span className="text-gold">O seu pode ser o próximo.</span>
+          <span className="text-gold">{t.developerCta.title2}</span>
         </motion.h2>
 
         <motion.div
@@ -50,7 +52,7 @@ export function DeveloperCTA() {
           transition={{ duration: 0.7, delay: 0.3 }}
           className="text-cream/60 text-lg leading-relaxed max-w-xl"
         >
-          Este é um projeto fictício desenvolvido para demonstrar capacidade técnica e sensibilidade estética em design e desenvolvimento web. Se você busca uma presença digital à altura da sua marca, vamos conversar.
+          {t.developerCta.disclaimer}
         </motion.p>
 
         <motion.div
