@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/sections/Footer'
 import { Badge } from '@/components/ui/Badge'
@@ -49,6 +51,12 @@ export default function Cardapio() {
       <Header />
       <main className="min-h-screen bg-base pt-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-12 py-20">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-cream/40 text-xs tracking-widest uppercase hover:text-gold transition-colors duration-300 mb-14">
+            <ArrowLeft size={12} /> Voltar ao início
+          </Link>
+
           <div className="text-center mb-20">
             <Badge variant="gold" className="mb-4">Cardápio Completo</Badge>
             <h1 className="font-display text-6xl text-cream italic mb-4">Nossa Cozinha</h1>
@@ -67,6 +75,14 @@ export default function Cardapio() {
               </div>
             </section>
           ))}
+
+          <div className="pt-8 border-t border-cream/10">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-cream/40 text-xs tracking-widest uppercase hover:text-gold transition-colors duration-300">
+              <ArrowLeft size={12} /> Voltar ao início
+            </Link>
+          </div>
         </div>
       </main>
       <Footer />
